@@ -1,38 +1,36 @@
 import geocoder
-from api import weather, zipcode_to_latlong
+from api import location, weather
 import parser
 from datetime import datetime as dt
-import time
+
 
 def main():
 
     print("~☀️~☀️~☀️~☀️~☀️~☀️~☀️~☀️~☀️~~☀️~☀️~☀️~☀️~☀️~☀️~☀️~\nWelcome to Will I Be Depressed! :D")
 
-    #time.sleep(0.5)
+    zip = input("Enter your ZIP code, or press enter for WillIBeDepressed to detect your location automatically: ").strip()
 
-    ip = input("\nEnter 0 to input your ZIP code, 1 for WillIBeDepressed to detect your location: ").strip()
+    while zip != "" and (not (zip.isdigit() and (len(zip) == 5 or len(zip) == 9))):
+        zip = input("Please enter ZIP code or press enter: ")
 
-    while ip != str(1) and ip != str(0):
-        ip = input("Please enter 0 (for ZIP code) or 1 (detect location): ")
-    ip = int(ip)
-
-    if ip == 1:
+    if zip == "":
         g = geocoder.ip("me")
         latlon_list = g.latlng
         lat, lon = latlon_list
-    elif ip == 0:
-        zipcode = input("Enter your ZIP code: ").strip()
-        if not (zipcode.isdigit() and (len(zipcode) == 5 or len(zipcode) == 9)):
+    elif zip != "":
+        if not (zip.isdigit() and (len(zip) == 5 or len(zip) == 9)):
             print("Invalid ZIP code format. Please enter a 5 or 9 digit ZIP code.")
             return
         else:
-            coords = zipcode_to_latlong.get_coordinates_from_zipcode(zipcode)
+            coords = location.get_coordinates_from_zipcode(zip)
             if not coords:
                 print("Could not determine coordinates for the provided ZIP code.")
                 return
             else:
                 lat, lon = coords
     print(f"Found coordinates: Lat {lat}, Lon {lon}")
+
+    forecast_url, city, state = weather.get_forecast_url(lat, lon)
 
     # Get current time
     current_hour = dt.now().hour
@@ -41,12 +39,12 @@ def main():
     show_tomorrow = current_hour >= 12
 
     day = "tomorrow" if show_tomorrow else "today"
-    print(f"\nGetting the weather forecast for {day}...")
+    print(f"\nGetting the weather forecast for {day} in {city.title()}, {state.upper()}...")
 
     # Get forecast data
-    forecast_data = weather.get_forecast(lat, lon)
+    forecast_data = weather.get_forecast(forecast_url)
 
-    parsed_forecast = parser.parse_forecast(forecast_data)
+    parsed_forecast = parser.parse_forecast(forecast_data, is_tomorrow=show_tomorrow)
 
     results = parser.calculate_depression(parsed_forecast)
 
