@@ -54,7 +54,7 @@ def main():
         print(f"\nYou are going to be depressed {day}. Sorry :/")
     else:
         print(f"You aren't going to be depressed {day}!! Yay!! :D")
-    print(f"{day.capitalize()} will be {results["temperature"]} F and {results["view"].lower()}. There is a {results["prob_precipitation"]}% chance of rain with winds up to {results["wind_max"]} mph.")
+    print(f"{day.capitalize()} will be {results['temperature']} F and {results['view'].lower()}. There is a {results['prob_precipitation']}% chance of rain with winds up to {results['wind_max']} mph.")
 
 
 if __name__ == "__main__":
