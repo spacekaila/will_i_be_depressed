@@ -2,16 +2,20 @@ import geocoder
 from api import weather, zipcode_to_latlong
 import parser
 from datetime import datetime as dt
-
+import time
 
 def main():
 
-    ip = input("Enter 0 to input your ZIP code, 1 for WillIBeDepressed to detect your location: ").strip()
+    print("~☀️~☀️~☀️~☀️~☀️~☀️~☀️~☀️~☀️~~☀️~☀️~☀️~☀️~☀️~☀️~☀️~\nWelcome to Will I Be Depressed! :D")
+
+    #time.sleep(0.5)
+
+    ip = input("\nEnter 0 to input your ZIP code, 1 for WillIBeDepressed to detect your location: ").strip()
 
     while ip != str(1) and ip != str(0):
         ip = input("Please enter 0 (for ZIP code) or 1 (detect location): ")
-
     ip = int(ip)
+
     if ip == 1:
         g = geocoder.ip("me")
         latlon_list = g.latlng
@@ -37,7 +41,7 @@ def main():
     show_tomorrow = current_hour >= 12
 
     day = "tomorrow" if show_tomorrow else "today"
-    print(f"Getting the weather forecast for {day}...")
+    print(f"\nGetting the weather forecast for {day}...")
 
     # Get forecast data
     forecast_data = weather.get_forecast(lat, lon)
@@ -47,10 +51,10 @@ def main():
     results = parser.calculate_depression(parsed_forecast)
 
     if results["depressed"]:
-        print(f"You are going to be depressed {day}. Sorry :/")
+        print(f"\nYou are going to be depressed {day}. Sorry :/")
     else:
         print(f"You aren't going to be depressed {day}!! Yay!! :D")
-    print(f"{day.capitalize()} will be {results["view"].lower()}, with a {results["prob_precipitation"]}% chance of rain. The average temp is {results["temperature"]} F and the max windspeed is {results["wind_max"]} mph.")
+    print(f"{day.capitalize()} will be {results["temperature"]} F and {results["view"].lower()}. There is a {results["prob_precipitation"]}% chance of rain with winds up to {results["wind_max"]} mph.")
 
 
 if __name__ == "__main__":

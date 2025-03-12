@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 def parse_forecast(forecast_data, is_tomorrow=False):
