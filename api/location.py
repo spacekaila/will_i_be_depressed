@@ -1,5 +1,6 @@
 import requests
 
+
 def get_coordinates_from_zipcode(zipcode):
     """Convert a zip code to latitude and longitude coordinates using a geocoding API
 
