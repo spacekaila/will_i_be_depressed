@@ -8,6 +8,8 @@ I taught myself how to use APIs by writing a program that tells you if the weath
 
 You need the [Geocoder](https://pypi.org/project/geocoder/) package (gets your latitude and longitude from your IP address). You can install it with `pip install geocoder`.
 
+### Install and run
+
 ```bash
 git clone git@github.com:spacekaila/will_i_be_depressed.git
 ```
