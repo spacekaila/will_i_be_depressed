@@ -1,0 +1,22 @@
+[project]
+name = "will-i-be-depressed"
+version = "0.1.0"
+description = "Program that tells you if the weather is going to make you depressed"
+authors = [
+    {name = "Kaila Nathaniel",email = "37944273+spacekaila@users.noreply.github.com"}
+]
+license = {text = "GNU General Public License v3.0"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "geocoder (>=1.38.1)"
+]
+
+[tool.poetry]
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.1.1"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
